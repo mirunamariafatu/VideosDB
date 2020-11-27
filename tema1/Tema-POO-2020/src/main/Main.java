@@ -3,9 +3,16 @@ package main;
 import checker.Checkstyle;
 import checker.Checker;
 import common.Constants;
+import dataset.ActorDataBase;
+import dataset.UserDataBase;
+import dataset.VideoDataBase;
+import fileio.ActionInputData;
 import fileio.Input;
 import fileio.InputLoader;
 import fileio.Writer;
+import inputdataset.SetInputData;
+import user.User;
+
 import org.json.simple.JSONArray;
 
 import java.io.File;
@@ -15,8 +22,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
+import org.json.simple.JSONObject;
+
+import action.Command;
+
 /**
- * The entry point to this homework. It runs the checker that tests your implentation.
+ * The entry point to this homework. It runs the checker that tests your
+ * implentation.
  */
 public final class Main {
     /**
@@ -27,6 +39,7 @@ public final class Main {
 
     /**
      * Call the main checker and the coding style checker
+     *
      * @param args from command line
      * @throws IOException in case of exceptions to reading / writing
      */
@@ -62,16 +75,37 @@ public final class Main {
      * @param filePath2 for output file
      * @throws IOException in case of exceptions to reading / writing
      */
-    public static void action(final String filePath1,
-                              final String filePath2) throws IOException {
+    public static void action(final String filePath1, final String filePath2) throws IOException {
         InputLoader inputLoader = new InputLoader(filePath1);
         Input input = inputLoader.readData();
 
         Writer fileWriter = new Writer(filePath2);
         JSONArray arrayResult = new JSONArray();
 
-        //TODO add here the entry point to your implementation
+        SetInputData database = new SetInputData(input);
+        UserDataBase users = database.setUsersData();
+        ActorDataBase actors = database.setActorData();
+        VideoDataBase videos = database.setVideolData();
+
+        for (ActionInputData action : input.getCommands()) {
+
+            if (action.getActionType().equals("command")) {
+
+                for (int i = 0; i < users.getUsersData().size(); i++) {
+
+                    if (action.getUsername().equals(users.getUsersData().get(i).getUsername())) {
+                        User myUser = users.getUsersData().get(i);
+                        Command newCommand = new Command(myUser, action, videos);
+                        String message = newCommand.getMessage();
+
+                        JSONObject obj = fileWriter.writeFile(action.getActionId(), "", message);
+                        arrayResult.add(obj);
+                    }
+                }
+            } 
+        }
 
         fileWriter.closeJSON(arrayResult);
     }
 }
+

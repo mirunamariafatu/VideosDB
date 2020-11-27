@@ -21,11 +21,21 @@ public final class Season {
      * List of ratings for each season
      */
     private List<Double> ratings;
+    private List<String> usersRating;
+
+    public List<String> getUsersRating() {
+        return usersRating;
+    }
+
+    public void setUsersRating(List<String> usersRating) {
+        this.usersRating = usersRating;
+    }
 
     public Season(final int currentSeason, final int duration) {
         this.currentSeason = currentSeason;
         this.duration = duration;
         this.ratings = new ArrayList<>();
+        this.usersRating = new ArrayList<>();
     }
 
     public int getDuration() {
@@ -46,12 +56,6 @@ public final class Season {
 
     @Override
     public String toString() {
-        return "Episode{"
-                + "currentSeason="
-                + currentSeason
-                + ", duration="
-                + duration
-                + '}';
+        return "Episode{" + "currentSeason=" + currentSeason + ", duration=" + duration + '}';
     }
 }
-

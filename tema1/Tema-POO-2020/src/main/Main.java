@@ -25,87 +25,105 @@ import java.util.Objects;
 import org.json.simple.JSONObject;
 
 import action.Command;
+import action.Query;
 
 /**
  * The entry point to this homework. It runs the checker that tests your
  * implentation.
  */
 public final class Main {
-    /**
-     * for coding style
-     */
-    private Main() {
-    }
+	/**
+	 * for coding style
+	 */
+	private Main() {
+	}
 
-    /**
-     * Call the main checker and the coding style checker
-     *
-     * @param args from command line
-     * @throws IOException in case of exceptions to reading / writing
-     */
-    public static void main(final String[] args) throws IOException {
-        File directory = new File(Constants.TESTS_PATH);
-        Path path = Paths.get(Constants.RESULT_PATH);
-        if (!Files.exists(path)) {
-            Files.createDirectories(path);
-        }
+	/**
+	 * Call the main checker and the coding style checker
+	 *
+	 * @param args from command line
+	 * @throws IOException in case of exceptions to reading / writing
+	 */
+	public static void main(final String[] args) throws IOException {
+		File directory = new File(Constants.TESTS_PATH);
+		Path path = Paths.get(Constants.RESULT_PATH);
+		if (!Files.exists(path)) {
+			Files.createDirectories(path);
+		}
 
-        File outputDirectory = new File(Constants.RESULT_PATH);
+		File outputDirectory = new File(Constants.RESULT_PATH);
 
-        Checker checker = new Checker();
-        checker.deleteFiles(outputDirectory.listFiles());
+		Checker checker = new Checker();
+		checker.deleteFiles(outputDirectory.listFiles());
 
-        for (File file : Objects.requireNonNull(directory.listFiles())) {
+		for (File file : Objects.requireNonNull(directory.listFiles())) {
 
-            String filepath = Constants.OUT_PATH + file.getName();
-            File out = new File(filepath);
-            boolean isCreated = out.createNewFile();
-            if (isCreated) {
-                action(file.getAbsolutePath(), filepath);
-            }
-        }
+			String filepath = Constants.OUT_PATH + file.getName();
+			File out = new File(filepath);
+			boolean isCreated = out.createNewFile();
+			if (isCreated) {
+				action(file.getAbsolutePath(), filepath);
+			}
+		}
 
-        checker.iterateFiles(Constants.RESULT_PATH, Constants.REF_PATH, Constants.TESTS_PATH);
-        Checkstyle test = new Checkstyle();
-        test.testCheckstyle();
-    }
+		checker.iterateFiles(Constants.RESULT_PATH, Constants.REF_PATH, Constants.TESTS_PATH);
+		Checkstyle test = new Checkstyle();
+		test.testCheckstyle();
+	}
 
-    /**
-     * @param filePath1 for input file
-     * @param filePath2 for output file
-     * @throws IOException in case of exceptions to reading / writing
-     */
-    public static void action(final String filePath1, final String filePath2) throws IOException {
-        InputLoader inputLoader = new InputLoader(filePath1);
-        Input input = inputLoader.readData();
+	/**
+	 * @param filePath1 for input file
+	 * @param filePath2 for output file
+	 * @throws IOException in case of exceptions to reading / writing
+	 */
+	public static void action(final String filePath1, final String filePath2) throws IOException {
+		InputLoader inputLoader = new InputLoader(filePath1);
+		Input input = inputLoader.readData();
 
-        Writer fileWriter = new Writer(filePath2);
-        JSONArray arrayResult = new JSONArray();
+		Writer fileWriter = new Writer(filePath2);
+		JSONArray arrayResult = new JSONArray();
 
-        SetInputData database = new SetInputData(input);
-        UserDataBase users = database.setUsersData();
-        ActorDataBase actors = database.setActorData();
-        VideoDataBase videos = database.setVideolData();
+		// Set all informations from input to their databases
+		SetInputData database = new SetInputData(input);
+		UserDataBase users = database.setUsersData();
+		ActorDataBase actors = database.setActorData();
+		VideoDataBase videos = database.setVideolData();
 
-        for (ActionInputData action : input.getCommands()) {
+		for (ActionInputData action : input.getCommands()) {
 
-            if (action.getActionType().equals("command")) {
+			// Check action type
+			switch (action.getActionType()) {
 
-                for (int i = 0; i < users.getUsersData().size(); i++) {
+			case "command":
 
-                    if (action.getUsername().equals(users.getUsersData().get(i).getUsername())) {
-                        User myUser = users.getUsersData().get(i);
-                        Command newCommand = new Command(myUser, action, videos);
-                        String message = newCommand.getMessage();
+				for (int i = 0; i < users.getUsersData().size(); i++) {
+					// Get the targeted user
+					if (action.getUsername().equals(users.getUsersData().get(i).getUsername())) {
+						User myUser = users.getUsersData().get(i);
+						Command newCommand = new Command(myUser, action, videos);
+						// Get the final message
+						String messageC = newCommand.getMessage();
 
-                        JSONObject obj = fileWriter.writeFile(action.getActionId(), "", message);
-                        arrayResult.add(obj);
-                    }
-                }
-            } 
-        }
+						JSONObject obj = fileWriter.writeFile(action.getActionId(), "", messageC);
+						arrayResult.add(obj);
+					}
+				}
+				break;
 
-        fileWriter.closeJSON(arrayResult);
-    }
+			case "query":
+
+				Query newQuery = new Query(actors, videos, action, users);
+				// Get the final message
+				String messageQ = newQuery.getQueryMessage();
+				JSONObject obj = fileWriter.writeFile(action.getActionId(), "", messageQ);
+				arrayResult.add(obj);
+				break;
+
+			default:
+				String message = "Invalid command !";
+			}
+
+		}
+		fileWriter.closeJSON(arrayResult);
+	}
 }
-

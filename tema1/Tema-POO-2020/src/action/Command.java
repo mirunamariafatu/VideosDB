@@ -41,7 +41,7 @@ public final class Command {
             message = user.add2favorites(command);
             break;
         case "view":
-            message = user.movieView(command);
+            message = user.videoView(command);
             break;
         case "rating":
             message = user.giveRating(command, videos);

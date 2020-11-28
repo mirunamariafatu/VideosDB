@@ -5,14 +5,36 @@ import java.util.List;
 import user.User;
 
 public final class UserDataBase {
+    /**
+     * Information about users, saved from input
+     */
+    private final List<User> usersData;
 
-	private final List<User> usersData;
+    public UserDataBase(final List<User> usersData) {
+        this.usersData = usersData;
+    }
 
-	public UserDataBase(final List<User> usersData) {
-		this.usersData = usersData;
-	}
+    public List<User> getUsersData() {
+        return usersData;
+    }
 
-	public List<User> getUsersData() {
-		return usersData;
-	}
+    /**
+     * Method that creates a HashMap of users'name according to the number of
+     * ratings they gave.
+     *
+     * @return a HashMap ---> username | number of ratings
+     */
+    public HashMap<String, Double> getNumberOfRatingsMap() {
+
+        HashMap<String, Double> usersMap = new HashMap<String, Double>();
+
+        for (User user : usersData) {
+            if (user.getRatingNr() != 0) {
+                usersMap.put(user.getUsername(), Double.valueOf(user.getRatingNr()));
+            }
+        }
+
+        return usersMap;
+    }
+
 }

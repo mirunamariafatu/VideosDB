@@ -1,0 +1,65 @@
+# VideosDB
+
+Fatu Miruna-Maria ~ 321CA
+
+The program aims to execute several actions on movies and serials depending
+on the choices and preferences of users 
+
+## Design scheme
+
+- In order to solve all the requirements, I implemented a class for each 
+possible action, each class using references to the data stored in the
+databases (for actors, users and videos)
+- In the database of each entity, I added the methods that process the 
+data related to the respective entity
+- In the classes of the entities (actor, user, videos) I added methods                                ~ Package show ~
+related to the their particularities (rating for video, history for user, etc.)               +--------------------------------+          
+                                                                                              | - Show  - abstract             | 
+                                                                                              +--------------------------------+
+    ~ Package action ~                                                                    ----| - Movie extends Show           | 
++---------------------------+                                                             |   +--------------------------------+         
+| - Command                 |------                    ~ Package dataset ~                ----| - Serial extends Show          | 
++---------------------------+     |              +--------------------------------+       |   +--------------------------------+                 ~ Package user ~
+| - Query                   |------------------->| - VideoDataBase                | <-------                                             +--------------------------------+               
++---------------------------+     |        |     +--------------------------------+                                               -------|  - User                        |       
+| - Recommendation          |------        ----->| - UserDataBase                 | <---------------------------------------------|      +--------------------------------+
++---------------------------+              |     +--------------------------------+                                               -------|  - PremiumUser extends User    |
+|  - MyHashMap              |              ----->| - ActorlDataBase               | <-------                                             +--------------------------------+
++---------------------------+                    +--------------------------------+        |                ~ Package actor ~                                              
+                                                                                           |        +--------------------------------+
+                                                                                           ---------| - Actor                        |
+                                                                                                    +--------------------------------+
+## Implementation                                                                                                         
+
+- All the actions from the input file will be analyzed in the main class,
+by checking their type
+- An object of the type of the desired action will be created, and then
+within the respective class, different methods will be used to get to the
+final message
+
+- "Command"-type actions:
+
+    - The methods that deal with performing "command"-type actions are in the
+    User class - add2favorites, videoView and GetRating - they are using user's
+    data 
+    - Each action will also generate a message (which will be displayed) showing
+    whether the command was successful or not
+
+- "Query"-type actions:
+
+    - For each type of query, different methods  will be used in the class 
+    (database) that target the desired action
+    - In almost all cases, the sorting of the objects will be done using
+    HashMaps (MyHashMap class), the sorting being made according to the value
+    of the keys, and then lexicographically
+    - The final message is created in the GetMessage method where all objects
+    that meet the requirements mentioned in the action will be displayed
+
+- "Recommendation"-type actions:
+
+    - The specific methods of this type of action are in the User and 
+    PremiumUser classes, each recommendation being unique for each user
+    (depending on his information)
+    - The sorting of the objects will be done using HashMaps, the sorting
+    criteria being the value of the key and the insertion order of the videos 
+    in video database

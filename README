@@ -1,6 +1,7 @@
 # VideosDB
 
 Fatu Miruna-Maria ~ 321CA
+Link GitHub: https://github.com/mirunamariafatu/VideosDB.git
 
 The program aims to execute several actions on movies and serials depending
 on the choices and preferences of users 
@@ -40,7 +41,7 @@ final message
 - "Command"-type actions:
 
     - The methods that deal with performing "command"-type actions are in the
-    User class - add2favorites, videoView and GetRating - they are using user's
+    User class - add2favorites, videoView and giveRating - they are using user's
     data 
     - Each action will also generate a message (which will be displayed) showing
     whether the command was successful or not
@@ -52,7 +53,7 @@ final message
     - In almost all cases, the sorting of the objects will be done using
     HashMaps (MyHashMap class), the sorting being made according to the value
     of the keys, and then lexicographically
-    - The final message is created in the GetMessage method where all objects
+    - The final message is created in the GetCommandMessage method where all objects
     that meet the requirements mentioned in the action will be displayed
 
 - "Recommendation"-type actions:

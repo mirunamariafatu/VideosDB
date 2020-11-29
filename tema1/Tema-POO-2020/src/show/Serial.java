@@ -4,10 +4,17 @@ import java.util.ArrayList;
 
 import entertainment.Season;
 
+/**
+ * Information about a serial, retrieved from input
+ */
 public final class Serial extends Show {
-
+    /**
+     * Number of seasons
+     */
     private final int numberOfSeasons;
-
+    /**
+     * Season list
+     */
     private final ArrayList<Season> seasons;
 
     public Serial(final String title, final ArrayList<String> cast,
@@ -31,6 +38,8 @@ public final class Serial extends Show {
         Double serialRating = 0.0;
         Double seasonRating = 0.0;
         Double totalRatings = 0.0;
+
+        // Calculate the rating of each season
         for (Season season : seasons) {
             if (season.getRatings().size() != 0) {
                 for (int i = 0; i < season.getRatings().size(); i++) {
@@ -43,7 +52,8 @@ public final class Serial extends Show {
             }
             serialRating += seasonRating;
         }
-        // ratingul serialului
+
+        // Calculate the final serial rating
         serialRating = serialRating / numberOfSeasons;
         return serialRating;
     }

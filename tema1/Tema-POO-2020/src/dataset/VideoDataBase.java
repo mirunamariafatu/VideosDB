@@ -9,6 +9,10 @@ import fileio.ActionInputData;
 import show.Show;
 import user.User;
 
+/**
+ * Information about all videos and methods of processing their data, retrieved
+ * from input database
+ */
 public final class VideoDataBase {
 
     /**

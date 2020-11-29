@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import user.User;
 
+/**
+ * Information about all users and methods of processing their data, retrieved
+ * from input database
+ */
 public final class UserDataBase {
     /**
      * Information about users, saved from input

@@ -18,14 +18,26 @@ import fileio.SerialInputData;
 import user.PremiumUser;
 import user.User;
 
+/**
+ * The class sets in the database the input information that will be used to
+ * execute different actions
+ */
 public final class SetInputData {
-
+    /**
+     * Information retrieved from parsing the input test files
+     */
     private final Input input;
 
     public SetInputData(final Input input) {
         this.input = input;
     }
 
+    /**
+     * Creates a database of USERS and informations about their actions and
+     * preferences, using information from input
+     *
+     * @return a database of users
+     */
     public UserDataBase setUsersData() {
 
         List<UserInputData> tempUsersData = input.getUsers();
@@ -48,6 +60,12 @@ public final class SetInputData {
         return userData;
     }
 
+    /**
+     * Creates a database of ACTORS and informations about their careers, using
+     * information from input
+     *
+     * @return a database of actors
+     */
     public ActorDataBase setActorData() {
         List<ActorInputData> tempActorsData = input.getActors();
         List<Actor> actors = new ArrayList<Actor>();
@@ -63,6 +81,12 @@ public final class SetInputData {
         return actorData;
     }
 
+    /**
+     * Creates a database of all videos, just movies or serials, using information
+     * from input
+     *
+     * @return a database of videos
+     */
     public VideoDataBase setVideolData() {
         List<MovieInputData> tempMoviesData = input.getMovies();
         List<SerialInputData> tempSerialsData = input.getSerials();

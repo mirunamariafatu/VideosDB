@@ -5,6 +5,10 @@ import fileio.ActionInputData;
 
 import user.User;
 
+
+/**
+ * Class that deals with the processing of "command" type actions
+ */
 public final class Command {
     /**
      * Current user

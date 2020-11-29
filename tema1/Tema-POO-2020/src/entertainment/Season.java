@@ -21,6 +21,9 @@ public final class Season {
      * List of ratings for each season
      */
     private List<Double> ratings;
+    /**
+     * List of users name who rated the current season
+     */
     private List<String> usersRating;
 
     public List<String> getUsersRating() {

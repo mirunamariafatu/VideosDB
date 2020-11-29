@@ -36,6 +36,7 @@ public final class Test {
                     break;
                 }
             }
+            scanner.close();
         }
     }
 }

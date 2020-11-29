@@ -1,27 +1,33 @@
 package actor;
 
 import java.util.ArrayList;
+
 import java.util.Map;
 
+/**
+ * Information about an actor, retrieved from parsing the input test files
+ */
 public final class Actor {
-
+    /**
+     * Actor name
+     */
     private String name;
-
+    /**
+     * Description of the actor's career
+     */
     private String careerDescription;
-
+    /**
+     * Videos starring actor
+     */
     private ArrayList<String> filmography;
-
+    /**
+     * Awards won by the actor
+     */
     private Map<ActorsAwards, Integer> awards;
-
-    private int isRated = 0;
-
-    public int getIsRated() {
-        return isRated;
-    }
-
-    public void setIsRated(int isRated) {
-        this.isRated = isRated;
-    }
+    /**
+     * Number of times a video in which the actor starred was rated
+     */
+    private int isRated;
 
     public Actor(final String name, final String careerDescription,
             final ArrayList<String> filmography, final Map<ActorsAwards, Integer> awards) {
@@ -29,6 +35,15 @@ public final class Actor {
         this.careerDescription = careerDescription;
         this.filmography = filmography;
         this.awards = awards;
+        this.isRated = 0;
+    }
+
+    public int getIsRated() {
+        return isRated;
+    }
+
+    public void setIsRated(int isRated) {
+        this.isRated = isRated;
     }
 
     public String getName() {

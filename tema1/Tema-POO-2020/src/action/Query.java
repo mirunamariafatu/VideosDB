@@ -8,6 +8,9 @@ import dataset.UserDataBase;
 import dataset.VideoDataBase;
 import fileio.ActionInputData;
 
+/**
+ * Class that deals with the processing of "query" type actions
+ */
 public final class Query {
     /**
      * Information from input (database) on which will be performed different actions

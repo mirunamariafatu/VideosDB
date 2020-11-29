@@ -13,6 +13,9 @@ import java.util.Map.Entry;
 import dataset.VideoDataBase;
 import fileio.ActionInputData;
 
+/**
+ * Class that contains methods for sorting and analyzing a HashMap
+ */
 public final class MyHashMap {
 
     /**
@@ -33,9 +36,8 @@ public final class MyHashMap {
 
     /**
      * A comparison method, which imposes a total ordering for the objects in the
-     * hashmap
-     * First comparison criteria is by the values in the hashmap
-     * Second comparison criteria is lexicographical order by key
+     * hashmap First comparison criteria is by the values in the hashmap Second
+     * comparison criteria is lexicographical order by key
      */
     class ComparaFilterName implements Comparator<Map.Entry<String, Double>> {
         public int compare(final Map.Entry<String, Double> o1,
@@ -53,9 +55,8 @@ public final class MyHashMap {
 
     /**
      * A comparison method, which imposes a total ordering for the objects in the
-     * hashmap
-     * First comparison criteria is by the values in the hashmap
-     * Second comparison criteria is the insertion order in database
+     * hashmap First comparison criteria is by the values in the hashmap Second
+     * comparison criteria is the insertion order in database
      */
     class ComparaFilterIndex implements Comparator<Map.Entry<String, Double>> {
         public int compare(final Map.Entry<String, Double> o1,
@@ -76,7 +77,7 @@ public final class MyHashMap {
      * Method that creates and returns a HashMap sorting the values from the current
      * HashMap using different comparison filters and methods
      *
-     * @param command      current action
+     * @param command current action
      * @return sorted map
      */
     public HashMap<String, Double> sortMapByValue(final ActionInputData command) {
@@ -128,9 +129,9 @@ public final class MyHashMap {
     /**
      * Method that searches for a key (video title) in the HashMap
      *
-     * @param videoName    string (key) to be searched in the hashmap
-     * @return 0 -> if the given video name (key) is not found in the hashmap
-     *         old value -> if the given video name (key) is found
+     * @param videoName string (key) to be searched in the hashmap
+     * @return 0 -> if the given video name (key) is not found in the hashmap old
+     *         value -> if the given video name (key) is found
      */
     public Double isInMap(final String videoName) {
 

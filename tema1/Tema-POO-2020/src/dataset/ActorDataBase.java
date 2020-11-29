@@ -14,6 +14,10 @@ import actor.ActorsAwards;
 import fileio.ActionInputData;
 import show.Show;
 
+/**
+ * Information about all actors and methods of processing their data, retrieved
+ * from input database
+ */
 public final class ActorDataBase {
     /**
      * Information about actors, saved from input
@@ -61,8 +65,8 @@ public final class ActorDataBase {
      * Method that creates a HashMap for actors based on the rating of the videos
      * they starred in.
      *
-     * @param videoData     videos from input
-     * @param command       current action
+     * @param videoData videos from input
+     * @param command   current action
      * @return a HashMap ---> actor's name | average rating
      */
     public HashMap<String, Double> getAverageMap(final VideoDataBase videoData) {
@@ -115,7 +119,7 @@ public final class ActorDataBase {
      * have, checking at the same time if they own the required prizes mentioned in
      * the action filter.
      *
-     * @param command   current action
+     * @param command current action
      * @return a HashMap ---> actor's name | number of awards
      */
     public HashMap<String, Double> getAwardsMap(final ActionInputData command) {
@@ -154,7 +158,7 @@ public final class ActorDataBase {
      * words. When the requirements are met, the name of the actor will be stored in
      * an array that represents the final result.
      *
-     * @param command   current action
+     * @param command current action
      * @return the final message to be displayed
      */
     public String getFilterDescription(final ActionInputData command) {
